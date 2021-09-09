@@ -178,7 +178,7 @@
                     }
                 }
                 if (!_isr) {
-                    if (micros() - _lastTime > 120000000 && getIsCharging() && (_mAhMax != _mAhRated || getPercentage() != 100.00)) {
+                    if (micros() - _lastTime > 240000000 && getIsCharging() && (_mAhMax != _mAhRated || getPercentage() != 100.00)) {
                         _percentage = 100.00;
                         _mAh = _mAhRated;
                         _mAhMax = _mAhRated;
