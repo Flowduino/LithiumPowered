@@ -24,6 +24,8 @@
     */
     class LithiumStorageBase {
         public:
+            void setup() {};
+
             inline virtual double getLastBatteryCapacity(double& defaultValue) = 0; // Abstract
             inline virtual void setLastBatteryCapacity(double& mAh) = 0; // Abstract
 
@@ -40,7 +42,9 @@
             private:
                 Preferences _prefs;
             public:
-                LithiumStorageESP32() : _prefs() {
+                LithiumStorageESP32() : _prefs() {}
+
+                void setup() {
                     _prefs.begin(BATTERY, false);
                 }
 

@@ -142,6 +142,8 @@
             void setup(double defaultCapacity) {
                 _wasInitialised = true;
 
+                _pStorage->setup();
+
                 // Input Pins
                 pinMode(_pGpio->getPinInterrupt(), INPUT);
                 pinMode(_pGpio->getPinPolarity(), INPUT);
