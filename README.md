@@ -64,7 +64,7 @@ void setup() {
     myBattery.setCallbacks(new MyBatteryCallbacks()); // Use your Custom Callbacks
     myBattery.setGpio(new MyBatteryGPIO()); // Use your Custom GPIO Settings
     // We would now change any Properties of myBattery as required
-    myBattery.setup(); // This will Initialise our Battery instance with the given Property values
+    myBattery.setup(500); // This will Initialise our Battery instance with the given Property values, where 500 tells it that the rated Battery capacity is 500mAh
 };
 
 void loop() {
