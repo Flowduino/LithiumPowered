@@ -54,7 +54,7 @@ The above will tell our `Battery` instance to use GPIO Pin 14 for the main Colou
 ## Initialising Battery
 
 ```c++
-#include <LithiumPowered.h>
+#include <LithiumPowered.hpp>
 
 Battery myBattery();
 
