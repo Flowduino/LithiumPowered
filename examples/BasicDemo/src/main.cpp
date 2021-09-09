@@ -39,7 +39,7 @@ class MyBatteryCallbacks: public BatteryCallbacks {
         };
 
         virtual void onBatteryRecalibrated() {
-            Serial.print("Maximum Battery Capacity has been Recalibrated!");
+            Serial.println("Maximum Battery Capacity has been Recalibrated!");
         };
 };
 
