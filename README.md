@@ -2,6 +2,11 @@
 
 Need Help? [![Discord](https://img.shields.io/badge/Discuss-on%20Discord-7289d9?style=plastic&logo=discord)](https://discord.gg/jpwBy7VzaG) [![Instagram](https://img.shields.io/badge/Follow-on%20Instagram-c32aa3?style=plastic&logo=instagram)](https://instagram.com/Flowduino)
 
+# Initial Development!
+Please be aware that this Library is currently in its initial development stages. It will function on the ESP32 just fine (tested and verified using PlatformIO for /examples/BasicDemo).
+The next release will include a .ino Sketch for hte BasicDemo in the Arduino IDE.
+Immediately thereafter, working support for the Arduino Uno and Nano R3 will be completed, tested, and submitted for 0.0.4.
+
 # LithiumPowered
 A (hopefully) Universal Library for Lithium-Powered Projects, designed to be available for both Arduino IDE and PlatformIO Projects.
 
