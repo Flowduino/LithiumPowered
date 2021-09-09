@@ -105,7 +105,7 @@
             double _mAh; // Current Capacity
             double _mAhMax; // Capacity when Battery is full
             double _mAhRated; // Capacity stated on the Battery's label
-            double _mAhChange; // Capacity lost (!_wasCharging) or gained (_wasCharging)
+            double _mAChange; // Capacity lost (!_wasCharging) or gained (_wasCharging)
             volatile BatteryState _state; // Is the Battery Charging or Discharging?
             uint8_t _pinInterrupt; // The GPIO Pin to use as the Interrupt
             uint8_t _pinPolarity; // The GPIO Pin to interrogate the Polarity
@@ -158,7 +158,7 @@
                 _mAhRated = defaultCapacity;
                 _mAh = _pStorage->getLastBatteryCapacity(defaultCapacity);
                 _mAhMax = _pStorage->getMaxmimumBatteryCapacity(defaultCapacity);
-                _mAhChange = 0.00;  // Default is that there was no change.
+                _mAChange = 0.00;  // Default is that there was no change.
                 _percentage = (_mAh / _mAhMax) * 100.00;
                 _percentQuanta = 1.0 / (_mAhMax / 1000.0 * 5859.0 / 100.0);
                 _isr = false;
@@ -210,7 +210,7 @@
                     }
                 }
 
-                _mAhChange = 614.4/((_deltaTime)/1000000.0); // Calculate by how much the capacity just changed.
+                _mAChange = 614.4/((_deltaTime)/1000000.0); // Calculate by how much the capacity just changed.
 
                 _pStorage->setLastBatteryCapacity(_mAh);
                 _pStorage->setMaximumBatteryCapacity(_mAhMax);
@@ -254,24 +254,25 @@
 
             inline double getCurrentCapacity() { return _mAh; };
             inline double getMaximumCapacity() { return _mAhMax; };
-            inline double getChangeCapacity() { return _mAhChange; };
+            inline double getChangeCapacity() { return _mAChange; };
             inline double getPercentage() { return _percentage; };
             inline bool getIsCharging() { return _state == Charging; };
             inline bool getIsDischarging() { return _state == Discharging; };
             inline BatteryState getState() { return _state; };
 
-            inline double getChangeCapacityWithPolarity() { return _lastState == Charging ? _mAhChange : _mAhChange * -1.0; }; // This is corrected for negative value on Discharge, positive on Charge.
+            inline double getChangeCapacityWithPolarity() { return _lastState == Charging ? _mAChange : _mAChange * -1.0; }; // This is corrected for negative value on Discharge, positive on Charge.
+            inline double getChangeCapacityPerHourWithPolarity() { return _lastState == Charging ? (_mAChange / _deltaTime)  * 3600000000.00 : ((_mAChange / _deltaTime)  * 3600000000.00) * -1.0; };
             inline unsigned long getLastTime() { return _lastTime; };
             inline unsigned long getDeltaTime() { return _deltaTime; };
 
             // Discharging Times
-            inline double getTimeToDischargeInHours() { return getIsCharging() ? __DBL_MAX__ :  _mAh / _mAhChange; };
+            inline double getTimeToDischargeInHours() { return getIsCharging() ? __DBL_MAX__ :  _mAh / _mAChange; };
             inline double getTimeToDischargeInMinutes() { return getIsCharging() ? __DBL_MAX__ : getTimeToDischargeInHours() * 60.00; };
             inline double getTimeToDischargeInSeconds() { return getIsCharging() ? __DBL_MAX__ : getTimeToDischargeInMinutes() * 60.00; };
             inline double getTimeToDischargeInMilliseconds() { return getIsCharging() ? __DBL_MAX__ : getTimeToDischargeInSeconds() * 1000.00; };
             inline double getTimeToDischargeInMicroseconds() { return getIsCharging() ? __DBL_MAX__ : getTimeToDischargeInMilliseconds() * 1000.00; };
             // Charging Times
-            inline double getTimeToChargeInHours() { return getIsDischarging() ? __DBL_MAX__ :  (_mAhMax - _mAh) / _mAhChange; };
+            inline double getTimeToChargeInHours() { return getIsDischarging() ? __DBL_MAX__ :  (_mAhMax - _mAh) / _mAChange; };
             inline double getTimeToChargeInMinutes() { return getIsDischarging() ? __DBL_MAX__ : getTimeToChargeInHours() * 60.00; };
             inline double getTimeToChargeInSeconds() { return getIsDischarging() ? __DBL_MAX__ : getTimeToChargeInMinutes() * 60.00; };
             inline double getTimeToChargeInMilliseconds() { return getIsDischarging() ? __DBL_MAX__ : getTimeToChargeInSeconds() * 1000.00; };

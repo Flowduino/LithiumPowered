@@ -6,7 +6,7 @@
 
 #include <LithiumPowered.hpp>
 
-#define BATTERY_RATED_CAPACITY  900.00 // Set this to the Rated Capacity of your Battery in mAh!
+#define BATTERY_RATED_CAPACITY  5000.00 // Set this to the Rated Capacity of your Battery in mAh!
 
 class MyBatteryCallbacks: public BatteryCallbacks {
     public:
@@ -20,20 +20,23 @@ class MyBatteryCallbacks: public BatteryCallbacks {
 
         virtual void onBatteryRemainingCapacityChanged() {
             Serial.print("Battery Update: ");
+            Serial.print(Battery.getIsCharging() ? "Gained " : "Lost ");
+            Serial.print(Battery.getChangeCapacity());
+            Serial.print("mA - ");
             Serial.print(Battery.getPercentage());
             Serial.print("% ");
             Serial.print(Battery.getCurrentCapacity());
             Serial.print("mAh remaining. ");
             Serial.print(Battery.getIsCharging() ? "Charging at +" : "Discharging at ");
-            Serial.print(Battery.getChangeCapacityWithPolarity());
+            Serial.print(Battery.getChangeCapacityPerHourWithPolarity());
             Serial.print("mAh");
             if (Battery.getIsCharging()) {
-            Serial.print(" - Time to full: ");
-            Serial.print(Battery.getTimeToChargeInMinutes());
+                Serial.print(" - Time to full: ");
+                Serial.print(Battery.getTimeToChargeInMinutes());
             }
             else {
-            Serial.print(" - Time to empty: ");
-            Serial.print(Battery.getTimeToDischargeInMinutes());
+                Serial.print(" - Time to empty: ");
+                Serial.print(Battery.getTimeToDischargeInMinutes());
             }
             Serial.println(" min");
         };
